@@ -1,0 +1,150 @@
+{
+    "id": "uri:bit_block",
+    "title": "bind.systems bit.block",
+    "@context": [
+        "https://www.w3.org/2019/wot/td/v1"
+    ],
+    "description": "bind.systems bit.block web of things development kit",
+    "base": "http://192.168.1.159/",
+    "securityDefinitions": {
+        "nosec_sc": {
+            "scheme": "nosec"
+        }
+    },
+    "security": [
+        "nosec_sc"
+    ],
+    "@type": [
+        "BindBitBlock"
+    ],
+    "actions": {
+        "stop_sound": {
+            "title": "stop playing",
+            "description": "stop playing a sound",
+            "@type": "stopSoundAction",
+            "input": {},
+            "forms": [
+                {
+                    "href": "/things/bit_block/actions/stop_sound"
+                }
+            ]
+        },
+        "sound": {
+            "title": "play a sound",
+            "description": "Sound playing",
+            "@type": "soundAction",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "repeat": {
+                        "type": "integer"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": [
+                                {
+                                    "type": "integer",
+                                    "title": "index",
+                                    "maximum": 40
+                                },
+                                {
+                                    "type": "integer",
+                                    "title": "time",
+                                    "maximum": 10000
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "forms": [
+                {
+                    "href": "/things/bit_block/actions/sound"
+                }
+            ]
+        },
+        "moon_light": {
+            "title": "Light up the moon",
+            "description": "RGB light",
+            "@type": "moonLightAction",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "repeat": {
+                        "type": "integer"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": [
+                                {
+                                    "type": "integer",
+                                    "title": "time",
+                                    "maximum": 10000
+                                },
+                                {
+                                    "type": "integer",
+                                    "title": "red",
+                                    "maximum": 255
+                                },
+                                {
+                                    "type": "integer",
+                                    "title": "green",
+                                    "maximum": 255
+                                },
+                                {
+                                    "type": "integer",
+                                    "title": "blue",
+                                    "maximum": 255
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "forms": [
+                {
+                    "href": "/things/bit_block/actions/moon_light"
+                }
+            ]
+        },
+        "head_light": {
+            "title": "Light up the head",
+            "description": "RGB light",
+            "@type": "headLightAction",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "repeat": {
+                        "type": "integer"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": [
+                                {
+                                    "type": "integer",
+                                    "title": "time",
+                                    "maximum": 10000
+                                },
+                                {
+                                    "type": "integer",
+                                    "title": "red"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "forms": [
+                {
+                    "href": "/things/bit_block/actions/head_light"
+                }
+            ]
+        }
+    }
+}

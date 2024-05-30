@@ -6,7 +6,7 @@
 
 import { CosmWasmClient, SigningCosmWasmClient, ExecuteResult } from "@cosmjs/cosmwasm-stargate";
 import { Coin, StdFee } from "@cosmjs/amino";
-import { InstantiateMsg, ExecuteMsg, QueryMsg, HashListResponse } from "./CosmonautJukeBox.types";
+import { InstantiateMsg, ExecuteMsg, Uint256, QueryMsg, HashListResponse } from "./CosmonautJukeBox.types";
 export interface CosmonautJukeBoxReadOnlyInterface {
   contractAddress: string;
 }
@@ -24,7 +24,7 @@ export interface CosmonautJukeBoxInterface extends CosmonautJukeBoxReadOnlyInter
   addLedHash: ({
     hash
   }: {
-    hash: number;
+    hash: Uint256;
   }, fee?: number | StdFee | "auto", memo?: string, _funds?: Coin[]) => Promise<ExecuteResult>;
 }
 export class CosmonautJukeBoxClient extends CosmonautJukeBoxQueryClient implements CosmonautJukeBoxInterface {
@@ -41,7 +41,7 @@ export class CosmonautJukeBoxClient extends CosmonautJukeBoxQueryClient implemen
   addLedHash = async ({
     hash
   }: {
-    hash: number;
+    hash: Uint256;
   }, fee: number | StdFee | "auto" = "auto", memo?: string, _funds?: Coin[]): Promise<ExecuteResult> => {
     return await this.client.execute(this.sender, this.contractAddress, {
       add_led_hash: {

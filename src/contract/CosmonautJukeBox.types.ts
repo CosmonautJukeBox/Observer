@@ -7,10 +7,11 @@
 export interface InstantiateMsg {}
 export type ExecuteMsg = ("remove_hash" | "clear_queue") | {
   add_led_hash: {
-    hash: number;
+    hash: Uint256;
   };
 };
+export type Uint256 = string;
 export type QueryMsg = "get_hash_list";
 export interface HashListResponse {
-  hashes: number[];
+  hashes: Uint256[];
 }
