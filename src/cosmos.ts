@@ -23,7 +23,7 @@ function handleRejection(response: any){
 
 let senderAddress: string = ""
 
-let testData = [1, 69, [ [1000, 255, 255, 255], [1000, 255, 200, 150] ]];
+let testData = [1, 73, [ [1000, 255, 255, 255], [1000, 255, 200, 150] ]];
 
 function delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
@@ -64,7 +64,7 @@ function handleWasmClient(client: SigningCosmWasmClient){
         .execute(senderAddress, contractAddress, "get_hash_list", "auto");
         */
 
-    
+    /*
     delay(10000).then(() => {
         let getHash = contractClient.client.queryContractSmart(contractAddress, "get_hash_list");
 
@@ -79,7 +79,7 @@ function handleWasmClient(client: SigningCosmWasmClient){
             
         deletionPromise.then(handleFilled, handleRejection)
     });
-    
+    */
     
 }
 

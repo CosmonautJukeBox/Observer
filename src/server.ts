@@ -408,21 +408,25 @@ class LightChangeRequest {
 //[Time in ms, r, g, b]
 type RGBData = [Number, Number, Number, Number];
 
+let isMoonSet: boolean = false;
 function setMoonTo(thing: WoT.ConsumedThing, request: LightChangeRequest) {
-  const result: Promise<ActionStatus> = thing.invokeAction("moon_light", request,
-  ) as Promise<ActionStatus>;
-
-  result
-    .then((result) => {
-      if (result.action == "successful") {
-        console.log(`setMoon was successful`);
-      } else {
-        console.warn(`setMoon  has failed`);
-      }
-    })
-    .catch((err) => {
-      console.error("setMoon error:", err);
-    });
+  if(!isMoonSet){
+    const result: Promise<ActionStatus> = thing.invokeAction("moon_light", request,
+    ) as Promise<ActionStatus>;
+  
+    result
+      .then((result) => {
+        if (result.action == "successful") {
+          console.log(`setMoon was successful`);
+        } else {
+          console.warn(`setMoon  has failed`);
+        }
+      })
+      .catch((err) => {
+        console.error("setMoon error:", err);
+      });
+      isMoonSet = true;
+  }
 }
 
 //[Sound Index, Time to play]
@@ -438,22 +442,28 @@ class PlayRequest {
   }
 }
 
+let isRunning: boolean = false;
+
 function setSoundTo(thing: WoT.ConsumedThing, request: PlayRequest) {
   console.log("request: ", request);
-  const result: Promise<ActionStatus> = thing.invokeAction("sound", request,
-  ) as Promise<ActionStatus>;
-
-  result
-    .then((result) => {
-      if (result.action == "successful") {
-        console.log(`play sound was successful`);
-      } else {
-        console.warn(`play sound  has failed`);
-      }
-    })
-    .catch((err) => {
-      console.error("play sound error:", err);
-    });
+  //Fixme: Very dirty
+  if(!isRunning){
+    const result: Promise<ActionStatus> = thing.invokeAction("sound", request,
+    ) as Promise<ActionStatus>;
+  
+    result
+      .then((result) => {
+        if (result.action == "successful") {
+          console.log(`play sound was successful`);
+        } else {
+          console.warn(`play sound  has failed`);
+        }
+      })
+      .catch((err) => {
+        console.error("play sound error:", err);
+      });
+      isRunning = true
+  }
 }
 
 let thing: WoT.ConsumedThing;
@@ -463,10 +473,19 @@ function checkQueue(){
   if(queue.length > 0){
     let elem = queue[0];
     let playData: PlayData[] = [
-      [elem.songId, 300]
+      [elem.songId, 300],
+      [0, 0]
     ];
     let playRequest = new PlayRequest(1, playData)
     setSoundTo(thing, playRequest);
+
+    let data = elem.ledData;
+
+    let rgbData: Array<RGBData> = data.map((elem) => {
+      return [elem.time, elem.r, elem.g, elem.b]
+    });
+    let lightRequest = new LightChangeRequest(0, rgbData)
+    setMoonTo(thing, lightRequest)
   }
 }
 
